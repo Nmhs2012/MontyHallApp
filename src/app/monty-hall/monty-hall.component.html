@@ -1,21 +1,56 @@
 <div class="container">
-    <h1>Monty Hall Simulation</h1>
-    <div>
-      <label for="numberOfGames">Number of Simulation:</label>
-      <input type="number" id="numberOfGames" [(ngModel)]="numberOfGames">
-    </div>
-    <div>
-        <label for="changeDoor">Change Door:</label>
-        <select id="changeDoor" [(ngModel)]="changeDoor">
-            <option [ngValue]="true">Yes</option>
-            <option [ngValue]="false">No</option>
-          </select>
+  <h1 class="my-4">Monty Hall Simulation</h1>
+
+  <div class="form-group">
+    <label for="numberOfGames">Number of Simulations:</label>
+    <input type="number" id="numberOfGames" class="form-control" [(ngModel)]="numberOfGames">
+  </div>
+  <br>
+  <div class="form-group">
+    <label for="changeDoor">Change Door:</label>
+    <select id="changeDoor" class="form-control" [(ngModel)]="changeDoor">
+      <option [ngValue]="true">Yes</option>
+      <option [ngValue]="false">No</option>
+    </select>
+  </div>
+
+  <br><br>
+  <button class="btn btn-primary mb-3" (click)="runSimulation()">START</button>
+
+  <!-- Game Results -->
+  <div *ngIf="result" class="mt-4">
+    <h2 class="mb-3">Game Results</h2>
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>Game</th>
+          <th>Car Door</th>
+          <th>Chosen Door</th>
+          <th>Switch Door</th>
+          <th>Win</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let game of result.gameResults; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ game.carDoor + 1 }}</td>
+          <td>{{ game.choosenDoor + 1 }}</td>
+          <td>{{ game.switchDoor ? 'Yes' : 'No' }}</td>
+          <td>{{ game.win ? 'Yes' : 'No' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Summary Details -->
+    <h2 class="mt-4 mb-3">Summary</h2>
+    <div class="card">
+      <div class="card-body">
+        <p class="card-text"><strong>Total Games:</strong> {{ result.summary.totalGames }}</p>
+        <p class="card-text"><strong>Wins:</strong> {{ result.summary.wins }}</p>
+        <p class="card-text"><strong>Losses:</strong> {{ result.summary.losses }}</p>
+        <hr>
+        <p class="card-text"><strong>Win Percentage:</strong> {{ result.summary.winPercentage | number:'1.0-2' }}%</p>
       </div>
-    <button (click)="runSimulation()">START</button>
-  
-    <div *ngIf="result">
-      <h2>Results</h2>
-      <p>Wins: {{ result.wins }}</p>
-      <p>Losses: {{ result.losses }}</p>
     </div>
   </div>
+</div>

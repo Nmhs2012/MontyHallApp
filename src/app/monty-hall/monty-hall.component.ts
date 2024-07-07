@@ -19,6 +19,7 @@ export class MontyHallComponent implements OnInit {
 
   runSimulation(): void {
     this.montyHallService.simulateGames(this.numberOfGames, this.changeDoor).subscribe(result => {
+      console.log("Result", result)
       this.result = result;
     });
   }
