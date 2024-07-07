@@ -4,12 +4,10 @@ namespace MontyHallApp.Services
 {
     public class MontyHallService
     {
-        public MontyHallSimulationResults Simulate(int numberOfGames, bool switchDoor)
+        public MontyHallModel Simulate(int numberOfGames, bool switchDoor)
         {
             int wins = 0;
-            bool isWin = false;
             Random random = new Random();
-            List<GameResult> gameResults = new List<GameResult>();
 
             for (int i = 0; i < numberOfGames; i++)
             {
@@ -23,7 +21,6 @@ namespace MontyHallApp.Services
                     if (choosenDoor != carDoor)
                     {
                         wins++;
-                        isWin = true;
                     }
                 }
                 //If doesn't switch the door
@@ -33,34 +30,15 @@ namespace MontyHallApp.Services
                     if (choosenDoor == carDoor)
                     {
                         wins++;
-                        isWin = true;
                     }
                 }
-
-                var result = new GameResult
-                {
-                    CarDoor = carDoor,
-                    ChoosenDoor = choosenDoor,
-                    SwitchDoor = switchDoor,
-                    Win = isWin
-                };
-
-                gameResults.Add(result);
             }
 
-            var summary = new MontyHallModel
-                {
-                    TotalGames = numberOfGames,
-                    Wins = wins,
-                    Losses = numberOfGames - wins,
-                    WinPercentage = (double)wins / numberOfGames * 100
-        };
-            
-
-            return new MontyHallSimulationResults
+            return new MontyHallModel
             {
-                Summary = summary,
-                GameResults = gameResults
+                TotalGames = numberOfGames,
+                Wins = wins,
+                Losses = numberOfGames - wins
             };
         }
     }
